@@ -1,4 +1,4 @@
-.PHONY: server login
+.PHONY: server login run clear
 
 server:
 	python scripts/set_up_server.py
@@ -6,5 +6,8 @@ server:
 login-manual:
 	python -i scripts/login.py 
 
-run:
-	./run.sh
+run: clear
+	./scripts/run.sh
+
+clear:
+	./scripts/clear.sh
