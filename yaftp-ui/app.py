@@ -46,6 +46,10 @@ def index():
     conn.close()
     return render_template('index.html', auths = auths)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 connections = {}
 
 @app.route('/<int:yaftp_id>', methods=('GET', 'POST'))
