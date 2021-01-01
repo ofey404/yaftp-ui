@@ -11,3 +11,19 @@
         <hr>
     {% endfor %}
 {% endblock %}
+
+{% block dropdown %}
+            <div class="dropdown">
+              <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Upload File to Current Dir
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for local_file in local_files %}
+                    <button type="submit" class="dropdown-item btn btn-primary">{{ local_file }}</button>
+                    <form action="" method="post">
+                        <button name="{{ local_file }}" value="{{ local_file }}">{{ local_file }}</button>
+                    </form>
+                {% endfor %}
+              </div>
+            </div>
+{% endblock %}

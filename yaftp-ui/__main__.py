@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, url_for, flash, redirect
 import sqlite3
 from werkzeug.exceptions import abort
 import yaftp
@@ -18,6 +18,8 @@ def get_yaftp_connection(yaftp_id):
     return yaftp_connection
     
 app = Flask(__name__)
+# ALERT: Modify this.
+app.config['SECRET_KEY'] = 'fair is foul, and foul is fair'
 
 @app.route('/')
 def index():
@@ -26,7 +28,36 @@ def index():
     conn.close()
     return render_template('index.html', auths = auths)
 
-@app.route('/<int:yaftp_id>')
+@app.route('/<int:yaftp_id>', methods=('GET', 'POST'))
 def yaftp_connection(yaftp_id):
+    if request.method == 'POST':
+        flash('POSTED!')
     yaftp_conn = get_yaftp_connection(yaftp_id)
-    return render_template('yaftp.html', yaftp_conn=yaftp_conn, files=['file1', 'dir1/'])
+    return render_template(
+        'yaftp.html', 
+        yaftp_conn=yaftp_conn,
+        files=['file1', 'dir1/'],
+        local_files=['local1', 'local2']
+        )
+
+
+@app.route('/create', methods=('GET', 'POST'))
+def create():
+    if request.method == 'POST':
+        host = request.form['host']
+        port = request.form['port']
+        username = request.form['username']
+        password = request.form['password']
+        datadir = request.form['datadir']
+
+        if None in (host, port, username, password, datadir):
+            flash('Something is required!')
+        else:
+            conn = get_db_connection()
+            conn.execute('INSERT INTO auth (username, passwd, datadir, host, port) VALUES (?, ?, ?, ?, ?)',
+                         (username, password, datadir, host, port))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
+
+    return render_template('create.html')

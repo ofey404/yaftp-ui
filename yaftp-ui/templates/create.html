@@ -1,0 +1,47 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Create a New Auth {% endblock %}</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="title">Host</label>
+        <input type="text" name="host"
+               placeholder="Hostname of your yaftp server" class="form-control"
+               value="{{ request.form['host'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Port</label>
+        <input type="text" name="port"
+               placeholder="Port" class="form-control"
+               value="{{ request.form['port'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Username</label>
+        <input type="text" name="username" id="username"
+               placeholder="Username" class="form-control"
+               value="{{ request.form['username'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Password</label>
+        <input type="password" name="password"
+               placeholder="Password" class="form-control"
+               value="{{ request.form['password'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <label for="title">Datadir</label>
+        <input type="text" name="datadir"
+               placeholder="Local dir" class="form-control"
+               value="{{ request.form['datadir'] }}"></input>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+{% endblock %}
