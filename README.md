@@ -1,4 +1,3 @@
-# yaftp: Yet anoter file transfer protocol
-A simple file transfer protocol, implemented with python.
+# yaftp-ui: Web User Interface of Yet anoter file transfer protocol
 
-5th project of FDU Computer Network 2020.
+`yaftp` package: https://github.com/ofey404/yaftp
