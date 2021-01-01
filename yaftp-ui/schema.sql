@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS auth;
+
+CREATE TABLE auth (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    passwd TEXT NOT NULL,
+    datadir TEXT NOT NULL,
+    host TEXT NOT NULL,
+    port TEXT NOT NULL
+);

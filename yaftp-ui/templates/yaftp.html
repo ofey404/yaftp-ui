@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} {{ yaftp_conn['username'] }}@{{ yaftp_conn['host'] }}:{{ yaftp_conn['port'] }} {% endblock %}</h1>
+    <span class="badge badge-primary">local dir: {{ yaftp_conn['datadir'] }}</span>
+    <hr>
+    {% for file in files %}
+        <a href="#">
+            <h2>{{ file }}</h2>
+        </a>
+        <hr>
+    {% endfor %}
+{% endblock %}

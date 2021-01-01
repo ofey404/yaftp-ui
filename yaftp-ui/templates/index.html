@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>{% block title %} Welcome to FlaskBlog {% endblock %}</h1>
-    {% for post in posts %}
-        <a href="#">
-            <h2>{{ post }}</h2>
+    <h1>{% block title %} Saved Connections {% endblock %}</h1>
+    {% for auth in auths %}
+        <a href="{{ url_for('yaftp_connection', yaftp_id=auth['id']) }}">
+            <h2>{{ auth['username'] }}@{{ auth['host'] }}:{{ auth['port'] }}</h2>
         </a>
+        <span class="badge badge-primary">local dir: {{ auth['datadir'] }}</span>
         <hr>
     {% endfor %}
 {% endblock %}
