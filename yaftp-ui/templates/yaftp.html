@@ -4,10 +4,6 @@
     <h1>{% block title %} {{ yaftp_conn['username'] }}@{{ yaftp_conn['host'] }}:{{ yaftp_conn['port'] }} {% endblock %}</h1>
     <span class="badge badge-primary">local dir: {{ yaftp_conn['datadir'] }}</span>
     <hr>
-    <form action="" method="post">
-        <button name="dir" value=".." class="btn btn-primary">..</button>
-    </form>
-    <hr>
     {% for folder in folders %}
         <form action="" method="post">
             <button name="dir" value="{{ folder }}" class="btn btn-primary">{{ folder }}</button>
@@ -16,7 +12,8 @@
     {% endfor %}
     {% for file in files %}
         <form action="" method="post">
-            <button name="file" value="{{ file }}" class="btn btn-success">{{ file }}</button>
+        <button name="file" value="{{ file }}" class="btn btn-success">{{ file }}</button>
+        <button name="delete" value="{{ file }}" class="btn btn-danger">Del</button>
         </form>
         <hr>
     {% endfor %}

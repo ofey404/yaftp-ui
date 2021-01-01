@@ -60,33 +60,44 @@ def yaftp_connection(yaftp_id):
     local_files = all_filenames(datadir)
 
     if username not in connections:
-        connections[username] = yaftp.YAFTP(
+        connections[username] = "/"
+        
+    c = yaftp.YAFTP(
             address=(host, int(port)),
             user=username,
             passwd=passwd
         )
 
-    connections[username].login()
+    c.login()
+    c.cd(connections[username])
 
     if request.method == 'POST':
         if "dir" in request.form:
             dir_name = request.form["dir"]
-            
-            connections[username].cd(dir_name)
-            flash(f'cd to {dir_name}!')
+            c.cd(dir_name)
+            connections[username] = c.pwd()
+            flash(f'cd to {connections[username]}!')
         if "file" in request.form:
             file_name = request.form["file"]
             savepath=os.path.join(datadir, file_name)
-            connections[username].get(name=file_name, savepath=savepath)
+            c.get(name=file_name, savepath=savepath)
             flash(f'saved {file_name} in {savepath}')
         if "local_file" in request.form:
             local_file_name = request.form["local_file"]
             filepath = os.path.join(datadir, local_file_name)
-            connections[username].send(filepath=filepath, name=local_file_name)
-            path = os.path.join(connections[username].pwd(), local_file_name)
+            c.send(filepath=filepath, name=local_file_name)
+            path = os.path.join(c.pwd(), local_file_name)
             flash(f'sent {local_file_name} to {path}')
+        if "delete" in request.form:
+            deleted_filename = request.form['delete']
+            c.delete(deleted_filename)
+            flash(f'deleted {deleted_filename}')
 
-    folders, files = get_folders_and_files(connections[username].dir())
+    folders, files = get_folders_and_files(c.dir())
+    if connections[username] != "/":
+        folders.append("..")
+
+    c.quit()
 
     t = render_template(
         'yaftp.html', 
