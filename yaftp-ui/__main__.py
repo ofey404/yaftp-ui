@@ -50,8 +50,16 @@ def create():
         password = request.form['password']
         datadir = request.form['datadir']
 
-        if None in (host, port, username, password, datadir):
-            flash('Something is required!')
+        if not host:
+            flash('host is required!')
+        if not port:
+            flash('port is required!')
+        if not username:
+            flash('username is required!')
+        if not password:
+            flash('password is required!')
+        if not datadir:
+            flash('datadir is required!')
         else:
             conn = get_db_connection()
             conn.execute('INSERT INTO auth (username, passwd, datadir, host, port) VALUES (?, ?, ?, ?, ?)',
